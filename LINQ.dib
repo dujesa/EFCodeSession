@@ -1,0 +1,368 @@
+#!markdown
+
+# LINQ courseware za 7. predavanje Internshipa
+
+Docsi za LINQ [LINQ 101](https://docs.microsoft.com/en-us/dotnet/csharp/linq/) koji mogu doci handy prilikom rjesavanja domaceg za ovo predavanje.
+
+## Sto su tocno LINQ queryji?
+
+Language integrated queries ili LINQ upiti su tool koji nam pruza nacin pisanja upita direktno putem C# jezika.
+
+C# podrzava dva nacina pisanja LINQ queryja:
+> **Query** sintaksu
+
+#!csharp
+
+IEnumerable<string> luxuryBooksQuery =
+    from book in books
+    where book.Price > 100m
+    select book.Title;
+
+luxuryBooksQuery.ToList()
+
+#!markdown
+
+> **Method** sintaksu (fokus prilikom internshipa)
+
+#!csharp
+
+IEnumerable<string> luxuryBooksMethod = books
+    .Where(book => book.Price > 100m)
+    .Select(book => book.Title);
+
+luxuryBooksMethod.ToList()
+
+#!markdown
+
+## Bitni koncepti LINQ querya.
+
+Kao prilikom koristenja svakog toola, bitno je prethodno upoznati njegove prednosti i nedostatke, kao i interne funkcionalnosti kako bi znali rukovati istim. 
+Nastavak coursewarea sadrzi zadatke sa nekim od osnovnih upita koje cemo danas nauciti.
+
+#!markdown
+
+## Seed podataka
+Napravili smo dummy seed koji predstavlja osobnu biblioteku. Biblioteka koristi za vodenje zapise o knjigama koje posjedujemo, njihovim zanrovima te prijateljima kojima smo posudili odredenu knjigu kako bi znali da su nam iste vracene.
+
+#!csharp
+
+public Random rng = new Random();
+
+class Book
+{
+    public string Isbn { get; init; }
+    public string Title { get; init; }
+    public decimal Price { get; init; }
+    public DateTime BoughtAt { get; init; }
+
+    public int? PatronId { get; set; }
+
+    public int? GenreId { get; set; }
+}
+
+class Genre
+{
+    public int Id { get; init; }
+    public string Name { get; init; }
+}
+
+class Person
+{
+    public int Id { get; init; }
+    public string FullName { get; init; }
+}
+
+var genres = new List<Genre>
+{
+    new() { Id = 1, Name = "Fantazija" },
+    new() { Id = 2, Name = "Roman" },
+    new() { Id = 3, Name = "Ostalo" }
+};
+
+var books = new List<Book>
+{
+    new() 
+    {
+        Isbn = "4828-aaaa-3848",
+        Title = "Harry potter 1",
+        Price = 99.99m,
+        BoughtAt = new DateTime(2012, 5, 20),
+        GenreId = 1,
+        PatronId = 1
+    },
+    new() 
+    {
+        Isbn = "1453-baaa-3948",
+        Title = "Harry potter 2",
+        Price = 23.00m,
+        BoughtAt = new DateTime(2021, 1, 1),
+        GenreId = 1,
+        PatronId = 1
+    },
+    new() 
+    {
+        Isbn = "3842-caaa-3948",
+        Title = "Harry potter 3",
+        Price = 199.99m,
+        BoughtAt = new DateTime(2019, 3, 8),
+        GenreId = 3,
+        PatronId = 1
+    },
+    new() 
+    {
+        Isbn = "6738-daaa-3823",
+        Title = "Glembayjevi",
+        Price = 9.99m,
+        BoughtAt = new DateTime(1996, 12, 24),
+        GenreId = 2,
+        PatronId = 1
+    },
+    new() 
+    {
+        Isbn = "7632-baaa-3848",
+        Title = "Zlocin i kazna",
+        Price = 93.99m,
+        BoughtAt = new DateTime(2000, 2, 10),
+        GenreId = 2,
+        PatronId = 2
+    },
+    new() 
+    {
+        Isbn = "4828-caaa-3848",
+        Title = "Proces",
+        Price = 2.99m,
+        BoughtAt = new DateTime(2014, 5, 20),
+        GenreId = 2,
+        PatronId = 2
+    },
+    new() 
+    {
+        Isbn = "1453-cbbb-3948",
+        Title = "Preobrazba",
+        Price = 199.99m,
+        BoughtAt = new DateTime(2002, 1, 1),
+        GenreId = 2,
+        PatronId = 2
+    },
+    new() 
+    {
+        Isbn = "4828-addd-3848",
+        Title = "Revolveras",
+        Price = 56.99m,
+        BoughtAt = new DateTime(2013, 3, 20),
+        GenreId = 1,
+        PatronId = 2
+    },
+    new() 
+    {
+        Isbn = "1453-bddd-3948",
+        Title = "The Stand",
+        Price = 13.99m,
+        BoughtAt = new DateTime(2001, 11, 11),
+        GenreId = 1,
+        PatronId = 3
+    },
+    new() 
+    {
+        Isbn = "3842-cddd-3948",
+        Title = "The Drawing of three",
+        Price = 99.99m,
+        BoughtAt = new DateTime(2019, 2, 2),
+        GenreId = 1,
+        PatronId = 3
+    },
+    new() 
+    {
+        Isbn = "6738-dddd-3823",
+        Title = "Lone lands",
+        Price = 999.29m,
+        BoughtAt = new DateTime(1999, 12, 24),
+        GenreId = 3,
+        PatronId = 4
+    }
+};
+
+var friends = new List<Person>
+{
+    new() 
+    {
+        Id = 1,
+        FullName = "Matija Luketin",
+    },
+    new() 
+    {
+        Id = 2,
+        FullName = "Ante Vuletic",
+    },
+    new() 
+    {
+        Id = 3,
+        FullName = "Frane Doljanin",
+    },
+    new() 
+    {
+        Id = 4,
+        FullName = "Kreso Condic",
+    },
+};
+
+#!markdown
+
+## Upute za rjesavanje
+1. Napisite rjesenje ispod //TODO komentara te isti komentar prebrisite.
+
+2. Kako bi testirali/runnali vas upit, pokrenite ga **play/execute** gumbom sa lijeve strane code boxa.
+
+3. Ukoliko zadatak ima vise podzadacica, nakon sto rjesite prvi, zakomentirajte ga pa nastavite unutar istog code boxa rjesavati ostale.
+
+4. Na kraju predavanja spremite lokalne promjene kako bi se mogli prisjetiti svega kod kuce.
+
+#!markdown
+
+# 1. Zadatak
+Ispisi sve spremljene prijatelje te njihove podatke.
+>Upute: Koristiti `ToList`, `AsQueryable` ili `AsEnumerable`  
+
+#!csharp
+
+//TODO: Rjesenje i execute cell (ctrl+alt+enter)
+friends.ToList()
+
+#!markdown
+
+## 2. Zadatak
+- Ispisati sva imena prijatelja.
+- Ispisati sve podatke o `Ante Vuletic`.
+- Obrnuti redosljed prijatelja te potom ispisati zadnjeg.
+- Ponovno obrnuti redosljed prijatelja te potom ispisati zadnjeg.
+>Upute: Koristiti `Select`, `Single`, `FirstOrDefault`, `Reverse`, `Last`  
+
+#!csharp
+
+//TODO: Rjesenje i execute cell (ctrl+alt+enter)
+
+friends.Select(f => f.FullName);
+friends.SelectMany(f => f.FullName);
+
+friends.SingleOrDefault(f => f.FullName == "Kreso Condic");
+
+friends.Reverse();
+friends.Last();
+
+friends.Reverse();
+friends.FirstOrDefault()
+
+#!markdown
+
+# 3. Zadatak
+- Ispisati puno ime i prezime prijatelja, broj knjiha koje je posudio i ukupnu cijenu posudenih knjiga.
+- Ispisati svaku knjigu iz nase bibloteke u formatu: ime knjige, zanr
+- Ispisati knjige grupirane po zanru te agregirati prosjecnu i najvecu cijenu knjiga za svaki zanr  
+>Upute: Koristiti `Where`, `Average`, `Max`, `Count`, `Sum`, `Min`, `GroupBy`  
+
+#!csharp
+
+//TODO: Rjesenje i execute cell (ctrl+alt+enter)
+
+friends.Select(f => new 
+{
+    patron = f.FullName,
+    numberOfBorrowedBooks = books.Count(b => b.PatronId == f.Id),
+    wholePrice = books.Where(b => b.PatronId == f.Id).Sum(b => b.Price)
+});
+
+books.Select(b => new
+{
+    Genre = genres.FirstOrDefault(g => g.Id == b.GenreId).Name,
+    Title = b.Title
+})
+.GroupBy(proj => proj.Genre);
+
+books
+.GroupBy(b => new { genreId = b.GenreId })
+.Select(proj => new
+{
+    genre = genres.Where(g => g.Id == proj.Key.genreId).Select(g => g.Name),
+    averagePrice = books.Where(b => b.GenreId == proj.Key.genreId).Average(gb => gb.Price),
+    maxPrice = books.Where(b => b.GenreId == proj.Key.genreId).Max(gb => gb.Price)
+})
+
+#!markdown
+
+# 4. Zadatak
+- Ispisati prvih 5 knjiga (simulacija 1. stranice)
+- Ispisati drugih 5 knjiga
+>Upute: Koristiti `Skip` i `Take`  
+
+#!csharp
+
+//TODO: Rjesenje i execute cell (ctrl+alt+enter)
+
+books.Take(5);
+books.Skip(5).Take(5)
+
+#!markdown
+
+# 5. Zadatak
+- Ispisati jeli odreden prijatelj (sa id-om: 2) posudio sve knjige
+- Ispisati jeli odreden prijatelj (sa id-om: 1) posudio ijednu knjigu
+>Upute: Koristiti `All` i `Any`  
+
+#!csharp
+
+//TODO: Rjesenje i execute cell (ctrl+alt+enter)
+
+books.All(b => b.PatronId == 2);
+books.Any(b => b.GenreId == 2);
+
+friends.Select(f => new 
+{
+    f.FullName,
+    HasOthersGenres = books.Any(b => b.GenreId == 3 && b.PatronId == f.Id)
+})
+
+#!markdown
+
+# 6. Zadatak
+Ispisati sve zanrove knjiga (ime zanra) te agregirati ukupnu cijenu svih knjiga po tom zanru. Takoder poredati rezultate na nacin da se ispisu padajuci, od najskupljeg zanra prema najjaftinijem.
+>Upute: Koristiti `OrderByDescending` i `Distinct`  
+
+#!csharp
+
+//TODO: Rjesenje i execute cell (ctrl+alt+enter)
+
+books
+.GroupBy(b => b.GenreId, b => new
+{ 
+    Genre = genres.First(g => g.Id == b.GenreId).Name,
+    b.Price 
+})
+.Select(group => new 
+{
+    Genre = group.Select(g => g.Genre).Distinct().SingleOrDefault(),
+    Price = group.Select(g => g.Price).Sum()
+})
+.OrderByDescending(selection => selection.Price)
+
+#!markdown
+
+# 7. Zadatak
+- Ispisati sve knjige te njihove zanrove sa prijateljem koji ih je posudio u formatu: puno ime prijatelja, naslov knjige i zanr kom knjiga pripada.
+>Upute: Koristiti `Join`  
+
+#!csharp
+
+//TODO: Rjesenje i execute cell (ctrl+alt+enter)
+
+books
+.Join(friends, b => b.PatronId, friend => friend.Id, (book, patron) => new 
+{
+    Patron = patron,
+    Book = book
+})
+.Join(genres, patronBook => patronBook.Book.GenreId, genre => genre.Id, (pb, g) => new
+{
+    Patron = pb.Patron.FullName,
+    Book = pb.Book.Title,
+    Genre = g.Name
+})
