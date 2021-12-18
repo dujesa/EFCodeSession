@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using PaymentManager.Data.Entities.Models;
+using PaymentManager.Data.Seeds;
 using System.IO;
 using System.Linq;
 
@@ -34,7 +35,7 @@ namespace PaymentManager.Data.Entities
 
 
 
-            //DatabaseSeeder.Execute(modelBuilder);
+            DatabaseSeeder.Execute(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
     }
