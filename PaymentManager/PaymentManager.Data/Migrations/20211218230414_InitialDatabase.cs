@@ -30,7 +30,7 @@ namespace PaymentManager.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Iban = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RegisteredAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

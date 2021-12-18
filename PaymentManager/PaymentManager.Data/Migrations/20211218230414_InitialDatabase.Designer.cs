@@ -10,7 +10,7 @@ using PaymentManager.Data.Entities;
 namespace PaymentManager.Data.Migrations
 {
     [DbContext(typeof(PaymentManagerDbContext))]
-    [Migration("20211218224902_InitialDatabase")]
+    [Migration("20211218230414_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,11 +31,11 @@ namespace PaymentManager.Data.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Iban")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RegisteredAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
