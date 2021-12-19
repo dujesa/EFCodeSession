@@ -6,6 +6,7 @@ namespace PaymentManager.Data.Entities.Models
     {
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
+        public decimal Amount { get; set; }
 
         public int CardId { get; set; }
         public Card Card { get; set; }

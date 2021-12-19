@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PaymentManager.Data.Entities;
 
 namespace PaymentManager.Data.Migrations
 {
     [DbContext(typeof(PaymentManagerDbContext))]
-    partial class PaymentManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211219132042_AddCardPaymentAmount")]
+    partial class AddCardPaymentAmount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +120,7 @@ namespace PaymentManager.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Amount = 99.99m,
+                            Amount = 0m,
                             CardId = 1,
                             CreatedAt = new DateTime(2021, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PaymentId = 1
@@ -126,7 +128,7 @@ namespace PaymentManager.Data.Migrations
                         new
                         {
                             Id = 2,
-                            Amount = 100m,
+                            Amount = 0m,
                             CardId = 3,
                             CreatedAt = new DateTime(2021, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PaymentId = 1
@@ -134,7 +136,7 @@ namespace PaymentManager.Data.Migrations
                         new
                         {
                             Id = 3,
-                            Amount = 637m,
+                            Amount = 0m,
                             CardId = 3,
                             CreatedAt = new DateTime(2021, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PaymentId = 2
@@ -142,7 +144,7 @@ namespace PaymentManager.Data.Migrations
                         new
                         {
                             Id = 4,
-                            Amount = 33.7m,
+                            Amount = 0m,
                             CardId = 2,
                             CreatedAt = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PaymentId = 3
@@ -150,7 +152,7 @@ namespace PaymentManager.Data.Migrations
                         new
                         {
                             Id = 5,
-                            Amount = 7000m,
+                            Amount = 0m,
                             CardId = 1,
                             CreatedAt = new DateTime(2021, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PaymentId = 3

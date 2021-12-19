@@ -1,12 +1,14 @@
-﻿using System;
+﻿using PaymentManager.Presentation.Extensions;
+using PaymentManager.Presentation.Factories;
 
 namespace PaymentManager.Presentation
 {
     public class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Hello World!");
+            var mainMenuActions = MainMenuFactory.GetMainMenuActions();
+            mainMenuActions.PrintActionsAndCall();
         }
     }
 }

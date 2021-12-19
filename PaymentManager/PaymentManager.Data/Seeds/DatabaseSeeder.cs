@@ -141,6 +141,7 @@ namespace PaymentManager.Data.Seeds
                         CardId = 1,
                         CreatedAt = new DateTime(2021, 5, 14),
                         PaymentId = 1,
+                        Amount = 99.99m
                     },
                     new CardPayment
                     {
@@ -148,6 +149,7 @@ namespace PaymentManager.Data.Seeds
                         CardId = 3,
                         CreatedAt = new DateTime(2021, 1, 3),
                         PaymentId = 1,
+                        Amount = 100m
                     },
                     new CardPayment
                     {
@@ -155,6 +157,7 @@ namespace PaymentManager.Data.Seeds
                         CardId = 3,
                         CreatedAt = new DateTime(2021, 10, 21),
                         PaymentId = 2,
+                        Amount = 637m
                     },
                     new CardPayment
                     {
@@ -162,6 +165,7 @@ namespace PaymentManager.Data.Seeds
                         CardId = 2,
                         CreatedAt = new DateTime(2020, 1, 1),
                         PaymentId = 3,
+                        Amount = 33.7m
                     },
                     new CardPayment
                     {
@@ -169,6 +173,7 @@ namespace PaymentManager.Data.Seeds
                         CardId = 1,
                         CreatedAt = new DateTime(2021, 11, 11),
                         PaymentId = 3,
+                        Amount = 7000m
                     },
                });
         }
